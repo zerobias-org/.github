@@ -1,0 +1,75 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://schemas.zerobias.com/crosswalk.schema.json",
+  "title": "Crosswalk Artifact Schema",
+  "description": "Schema for validating crosswalk artifacts in the Zerobias compliance framework ecosystem",
+  "type": "object",
+  "required": [
+    "id",
+    "name",
+    "description", 
+    "externalId",
+    "code",
+    "status",
+    "sourceStandard",
+    "targetStandard"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$",
+      "description": "UUID v4 identifier for this crosswalk"
+    },
+    "name": {
+      "type": "string",
+      "minLength": 10,
+      "maxLength": 300,
+      "description": "Full crosswalk name describing source to target mapping"
+    },
+    "description": {
+      "type": "string",
+      "minLength": 20,
+      "maxLength": 500,
+      "description": "Detailed description of the crosswalk mappings"
+    },
+    "externalId": {
+      "type": "string",
+      "minLength": 10,
+      "maxLength": 300,
+      "description": "External identifier (typically same as name)"
+    },
+    "code": {
+      "type": "string",
+      "pattern": "^[a-z0-9_]+_crosswalk$",
+      "description": "Crosswalk code ending with '_crosswalk'"
+    },
+    "status": {
+      "type": "string",
+      "enum": ["published", "draft"],
+      "description": "Publication status of the crosswalk"
+    },
+    "sourceStandard": {
+      "type": "string",
+      "pattern": "^[a-z0-9_.-]+\\.framework$",
+      "description": "Source framework code in format: vendor.suite.version.framework"
+    },
+    "targetStandard": {
+      "type": "string",
+      "pattern": "^[a-z0-9_.-]+\\.framework$", 
+      "description": "Target framework code in format: vendor.suite.version.framework"
+    }
+  },
+  "additionalProperties": false,
+  "examples": [
+    {
+      "id": "d2dde880-9dad-11d1-80b4-00c04fd430c8",
+      "name": "NIST SP 800-53 Rev 5 to Secure Controls Framework (SCF) 2025.2.1 Crosswalk",
+      "description": "Crosswalk mappings from NIST SP 800-53 Rev 5 to the Secure Controls Framework (SCF) 2025.2.1",
+      "externalId": "NIST SP 800-53 Rev 5 to Secure Controls Framework (SCF) 2025.2.1",
+      "code": "nist_sp_800_53_rev5_complianceforge_scf_202521_crosswalk",
+      "status": "published",
+      "sourceStandard": "nist.sp_800_53.rev5.framework",
+      "targetStandard": "complianceforge.scf.2025_2_1.framework"
+    }
+  ]
+}

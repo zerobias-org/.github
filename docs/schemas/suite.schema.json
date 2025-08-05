@@ -1,0 +1,114 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://schemas.zerobias.com/suite.schema.json",
+  "title": "Suite Artifact Schema",
+  "description": "Schema for validating suite artifacts in the Zerobias compliance framework ecosystem",
+  "type": "object",
+  "required": [
+    "code",
+    "name",
+    "vendorCode", 
+    "vendorId",
+    "vendorName",
+    "type",
+    "status",
+    "id",
+    "created",
+    "updated",
+    "description"
+  ],
+  "properties": {
+    "code": {
+      "type": "string",
+      "pattern": "^[a-z0-9_-]+$",
+      "minLength": 2,
+      "maxLength": 50,
+      "description": "Unique suite identifier (lowercase, underscores, hyphens)"
+    },
+    "name": {
+      "type": "string",
+      "minLength": 2,
+      "maxLength": 200,
+      "description": "Full suite/regulation name"
+    },
+    "vendorCode": {
+      "type": "string",
+      "pattern": "^[a-z0-9_]+$",
+      "minLength": 2,
+      "maxLength": 50,
+      "description": "Parent vendor code (must match existing vendor)"
+    },
+    "vendorId": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$",
+      "description": "Parent vendor UUID (must match existing vendor)"
+    },
+    "vendorName": {
+      "type": "string",
+      "minLength": 2,
+      "maxLength": 200,
+      "description": "Parent vendor name (must match existing vendor)"
+    },
+    "type": {
+      "type": "string",
+      "enum": ["suite"],
+      "description": "Artifact type (always 'suite')"
+    },
+    "status": {
+      "type": "string",
+      "enum": ["active", "inactive"],
+      "description": "Current status of the suite"
+    },
+    "id": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$",
+      "description": "UUID v4 identifier for this suite"
+    },
+    "created": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 timestamp when suite was created"
+    },
+    "updated": {
+      "type": "string",
+      "format": "date-time", 
+      "description": "ISO 8601 timestamp when suite was last updated"
+    },
+    "description": {
+      "type": "string",
+      "minLength": 10,
+      "maxLength": 500,
+      "description": "Brief description of the suite/regulation"
+    },
+    "url": {
+      "type": "string",
+      "format": "uri",
+      "pattern": "^https?://",
+      "description": "Official documentation URL (optional)"
+    },
+    "logo": {
+      "type": "string",
+      "format": "uri",
+      "pattern": "^https?://",
+      "description": "CDN URL for suite logo (optional)"
+    }
+  },
+  "additionalProperties": false,
+  "examples": [
+    {
+      "code": "gdpr",
+      "name": "General Data Protection Regulation",
+      "vendorCode": "eu",
+      "vendorId": "7ca7b820-9dad-11d1-80b4-00c04fd430c8",
+      "vendorName": "European Union",
+      "type": "suite",
+      "status": "active",
+      "id": "8da8b830-9dad-11d1-80b4-00c04fd430c8",
+      "created": "2024-01-15T10:30:00.000Z",
+      "updated": "2024-01-15T10:30:00.000Z",
+      "description": "Regulation on the protection of natural persons with regard to the processing of personal data",
+      "url": "https://gdpr.eu/",
+      "logo": "https://cdn.auditmation.io/logos/eu_gdpr.svg"
+    }
+  ]
+}

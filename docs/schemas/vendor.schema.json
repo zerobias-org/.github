@@ -1,0 +1,101 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://schemas.zerobias.com/vendor.schema.json",
+  "title": "Vendor Artifact Schema",
+  "description": "Schema for validating vendor artifacts in the Zerobias compliance framework ecosystem",
+  "type": "object",
+  "required": [
+    "code",
+    "name", 
+    "status",
+    "id",
+    "created",
+    "updated",
+    "description",
+    "ownerId"
+  ],
+  "properties": {
+    "code": {
+      "type": "string",
+      "pattern": "^[a-z0-9_]+$",
+      "minLength": 2,
+      "maxLength": 50,
+      "description": "Unique vendor identifier (lowercase, underscores only)"
+    },
+    "name": {
+      "type": "string",
+      "minLength": 2,
+      "maxLength": 200,
+      "description": "Full organization name"
+    },
+    "status": {
+      "type": "string",
+      "enum": ["active", "inactive"],
+      "description": "Current status of the vendor"
+    },
+    "id": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$",
+      "description": "UUID v4 identifier"
+    },
+    "created": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 timestamp when vendor was created"
+    },
+    "updated": {
+      "type": "string", 
+      "format": "date-time",
+      "description": "ISO 8601 timestamp when vendor was last updated"
+    },
+    "description": {
+      "type": "string",
+      "minLength": 10,
+      "maxLength": 500,
+      "description": "Brief description of the vendor"
+    },
+    "url": {
+      "type": "string",
+      "format": "uri",
+      "pattern": "^https?://",
+      "description": "Official website URL (optional)"
+    },
+    "logo": {
+      "type": "string",
+      "format": "uri",
+      "pattern": "^https?://",
+      "description": "CDN URL for vendor logo (optional)"
+    },
+    "ownerId": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{3}-[0-9a-f]{4}-[0-9a-f]{12}$",
+      "description": "Owner UUID (typically default owner)"
+    }
+  },
+  "additionalProperties": false,
+  "examples": [
+    {
+      "code": "nist",
+      "name": "National Institute of Standards and Technology",
+      "status": "active",
+      "id": "550e8400-e29b-41d4-a716-446655440000",
+      "created": "2024-01-15T10:30:00.000Z",
+      "updated": "2024-01-15T10:30:00.000Z",
+      "description": "Government agency that publishes compliance frameworks and standards.",
+      "url": "https://www.nist.gov",
+      "logo": "https://cdn.auditmation.io/logos/nist.svg",
+      "ownerId": "00000000-0000-0000-0000-000000000000"
+    },
+    {
+      "code": "sony_pictures",
+      "name": "Sony Pictures Entertainment", 
+      "status": "active",
+      "id": "12345678-1234-5678-9abc-123456789abc",
+      "created": "2024-08-04T10:30:00.000Z",
+      "updated": "2024-08-04T10:30:00.000Z",
+      "description": "Entertainment industry organization that publishes compliance frameworks and standards.",
+      "url": "https://www.sonypictures.com",
+      "ownerId": "00000000-0000-0000-0000-000000000000"
+    }
+  ]
+}

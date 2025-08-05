@@ -1,0 +1,62 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://schemas.zerobias.com/framework-element.schema.json",
+  "title": "Framework Element Schema",
+  "description": "Schema for validating individual framework elements (controls/requirements)",
+  "type": "object",
+  "required": [
+    "id",
+    "externalId",
+    "name",
+    "description",
+    "elementType"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$",
+      "description": "UUID v4 identifier for this element"
+    },
+    "externalId": {
+      "type": "string",
+      "pattern": "^[a-z0-9.-]+$",
+      "minLength": 1,
+      "maxLength": 50,
+      "description": "Original framework identifier (lowercase, preserve format)"
+    },
+    "name": {
+      "type": "string",
+      "minLength": 5,
+      "maxLength": 200,
+      "description": "Element title or name"
+    },
+    "description": {
+      "type": "string",
+      "minLength": 10,
+      "maxLength": 5000,
+      "description": "Full element description or requirement text"
+    },
+    "elementType": {
+      "type": "string",
+      "pattern": "^[a-z_]+$",
+      "description": "Element type code (must match framework elementTypes)"
+    }
+  },
+  "additionalProperties": false,
+  "examples": [
+    {
+      "id": "6ba7b810-9dad-11d1-80b4-00c04fd430c8",
+      "externalId": "ac-1",
+      "name": "Access Control Policy and Procedures",
+      "description": "The organization develops, documents, and disseminates access control policy and procedures.",
+      "elementType": "control"
+    },
+    {
+      "id": "7ca7b820-9dad-11d1-80b4-00c04fd430c8", 
+      "externalId": "a.5.1.1",
+      "name": "Information security policy",
+      "description": "An information security policy shall be defined and approved by management.",
+      "elementType": "requirement"
+    }
+  ]
+}

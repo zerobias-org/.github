@@ -1,0 +1,170 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://schemas.zerobias.com/framework.schema.json",
+  "title": "Framework Artifact Schema",
+  "description": "Schema for validating framework artifacts in the Zerobias compliance framework ecosystem",
+  "type": "object",
+  "required": [
+    "id",
+    "code",
+    "name",
+    "description",
+    "status",
+    "external",
+    "internal",
+    "vendor",
+    "suite", 
+    "version",
+    "elementTypes"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$",
+      "description": "UUID v4 identifier for this framework"
+    },
+    "code": {
+      "type": "string",
+      "pattern": "^[a-z0-9_.-]+\\.framework$",
+      "description": "Framework code in format: vendor.suite.version.framework"
+    },
+    "name": {
+      "type": "string",
+      "minLength": 5,
+      "maxLength": 200,
+      "description": "Full framework name with version"
+    },
+    "description": {
+      "type": "string",
+      "minLength": 10,
+      "maxLength": 1000,
+      "description": "Detailed description of the framework"
+    },
+    "url": {
+      "type": "string",
+      "format": "uri",
+      "pattern": "^https?://",
+      "description": "Official documentation URL (optional)"
+    },
+    "status": {
+      "type": "string",
+      "enum": ["approved", "draft"],
+      "description": "Framework status"
+    },
+    "external": {
+      "type": "boolean",
+      "description": "True for non-SCF frameworks"
+    },
+    "internal": {
+      "type": "boolean",
+      "description": "True only for SCF master framework"
+    },
+    "vendor": {
+      "type": "string",
+      "pattern": "^[a-z0-9_]+$",
+      "description": "Vendor code (must match existing vendor)"
+    },
+    "suite": {
+      "type": "string", 
+      "pattern": "^[a-z0-9_-]+$",
+      "description": "Suite code (must match existing suite)"
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^[a-z0-9_.]+$",
+      "description": "Version identifier (dots replaced with underscores)"
+    },
+    "elementTypes": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["id", "code", "name", "description"],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$",
+            "description": "UUID v4 for element type"
+          },
+          "code": {
+            "type": "string",
+            "pattern": "^[a-z_]+$",
+            "description": "Element type code (e.g., 'control', 'requirement')"
+          },
+          "name": {
+            "type": "string",
+            "minLength": 3,
+            "maxLength": 50,
+            "description": "Element type name"
+          },
+          "description": {
+            "type": "string",
+            "minLength": 10,
+            "maxLength": 200,
+            "description": "Element type description"
+          }
+        },
+        "additionalProperties": false
+      },
+      "description": "Array of element type definitions"
+    },
+    "mappingTypes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Supported mapping types (optional)"
+    }
+  },
+  "additionalProperties": false,
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "external": { "const": true }
+        }
+      },
+      "then": {
+        "properties": {
+          "internal": { "const": false }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "internal": { "const": true }
+        }
+      },
+      "then": {
+        "properties": {
+          "external": { "const": false }
+        }
+      }
+    }
+  ],
+  "examples": [
+    {
+      "id": "7ca7b820-9dad-11d1-80b4-00c04fd430c8",
+      "code": "nist.sp_800_53.rev5.framework",
+      "name": "NIST SP 800-53 Rev 5 - Security and Privacy Controls",
+      "description": "Security and Privacy Controls for Information Systems and Organizations",
+      "url": "https://csrc.nist.gov/publications/detail/sp/800-53/rev-5/final",
+      "status": "approved",
+      "external": true,
+      "internal": false,
+      "vendor": "nist",
+      "suite": "sp_800_53",
+      "version": "rev5",
+      "elementTypes": [
+        {
+          "id": "8da8b830-9dad-11d1-80b4-00c04fd430c8",
+          "code": "control",
+          "name": "Control",
+          "description": "Security or privacy control from NIST SP 800-53"
+        }
+      ],
+      "mappingTypes": []
+    }
+  ]
+}

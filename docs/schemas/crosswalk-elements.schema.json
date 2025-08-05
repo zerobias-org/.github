@@ -1,0 +1,77 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://schemas.zerobias.com/crosswalk-elements.schema.json",
+  "title": "Crosswalk Elements Schema", 
+  "description": "Schema for validating crosswalk elements.yml files",
+  "type": "object",
+  "required": ["elements"],
+  "properties": {
+    "elements": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "sourceElement",
+          "targetElement",
+          "relationshipType",
+          "strengthOfRelationship"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$",
+            "description": "UUID v4 for this mapping"
+          },
+          "sourceElement": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 50,
+            "description": "Original source framework element ID (preserve format)"
+          },
+          "targetElement": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 50,
+            "description": "Target framework element ID"
+          },
+          "relationshipType": {
+            "type": "string",
+            "enum": ["equivalent", "subset_of", "superset_of", "intersects"],
+            "description": "Type of relationship between elements"
+          },
+          "strengthOfRelationship": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 10,
+            "description": "Strength of relationship on 1-10 scale"
+          }
+        },
+        "additionalProperties": false
+      },
+      "description": "Array of element mappings"
+    }
+  },
+  "additionalProperties": false,
+  "examples": [
+    {
+      "elements": [
+        {
+          "id": "28d2af76-68de-4844-a537-48efe5d3ebec",
+          "sourceElement": "AC-1",
+          "targetElement": "GOV-01",
+          "relationshipType": "equivalent",
+          "strengthOfRelationship": 10
+        },
+        {
+          "id": "d449d17a-8213-438c-b527-3eddbfbf9293",
+          "sourceElement": "AC-2",
+          "targetElement": "IAC-01", 
+          "relationshipType": "subset_of",
+          "strengthOfRelationship": 8
+        }
+      ]
+    }
+  ]
+}
